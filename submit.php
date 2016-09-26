@@ -1,14 +1,19 @@
 <?php
   if( $_POST ){
-    require_once('database-connection.php');
 
-    $name = mysql_real_escape_string($_POST['name']);
+    include('database-connection.php');
 
-    $query = "
-INSERT INTO `users`.`comments` (`id`, `name`, `email`, `website`,
-       `comment`, `timestamp`, `articleid`) VALUES (NULL, '$users_name',
-       '$users_email', '$users_website', '$users_comment',
-       CURRENT_TIMESTAMP, '$articleid');";
+    $babe_name = mysqli_real_escape_string($con, $_POST['name']);
+
+    $query = "INSERT into users (name) VALUES ('$babe_name')";
+
+    if (!mysqli_query($con, $query)){
+     die('Error: ' . mysqli_error($con));
+   }else{
+     echo "thank you";
+   }
+
+    mysqli_close($con);
 
   }
 ?>
